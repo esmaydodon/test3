@@ -41,3 +41,4 @@ Route::put('/proveedor/actualizar','ProveedorController@update');
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
+//Marlon Martos Quiroz 2020
