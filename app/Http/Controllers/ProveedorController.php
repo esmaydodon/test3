@@ -10,14 +10,14 @@ class ProveedorController extends Controller
 {
     public function index(Request $request)
     {
-       // if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         $buscar = $request->buscar;
         $criterio = $request->criterio;
 
         if ($buscar==''){
             //unimos nuestra tabla proveedor con tabla  personas
-            $personas = DB::table('provedores')
-            ->join('personas','provedores.id','=','personas.id')
+            // $personas = DB::table('provedores')
+            $personas =Proveedor::join('personas','provedores.id','=','personas.id')
             ->select('personas.id','personas.nombre','personas.tipo_documento',
             'personas.num_documento','personas.direccion','personas.telefono','personas.email',
             'provedores.contacto','provedores.telefono_contacto')
@@ -46,7 +46,6 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-
         try {
             DB::beginTransaction();    
         $persona = new Persona();
@@ -62,7 +61,7 @@ class ProveedorController extends Controller
         $proveedor->contacto=$request->contacto;
         $proveedor->telefono_contacto=$request->telefono_contacto;
         $proveedor->id=$persona->id;//obtenimos el id de persona para llave foranea personass
-        $proveedor->(save);
+        $proveedor->save();
         DB::commit();
         } catch (Exception $e) {
            DB::rollBack();//en caso haya error se desace la transaccion anterior
@@ -71,7 +70,7 @@ class ProveedorController extends Controller
         
     }
     public function update(Request $request)
-    {
+    {   if (!$request->ajax()) return redirect('/');
         try {
             DB::beginTransaction();  
               //buacamos el proveedor a modificar
@@ -86,11 +85,11 @@ class ProveedorController extends Controller
         $persona->email =$request->email;
         $persona->save();
 
-        $proveedor = new Proveedor();
+        //$proveedor = new Proveedor();
         $proveedor->contacto=$request->contacto;
         $proveedor->telefono_contacto=$request->telefono_contacto;
         //$proveedor->id=$persona->id;//obtenimos el id de persona para llave foranea personass
-        $proveedor->(save);
+        $proveedor->save();
         DB::commit();
         } catch (Exception $e) {
            DB::rollBack();//en caso haya error se desace la transaccion anterior
