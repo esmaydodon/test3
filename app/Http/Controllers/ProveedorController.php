@@ -16,8 +16,8 @@ class ProveedorController extends Controller
 
         if ($buscar==''){
             //unimos nuestra tabla proveedor con tabla  personas
-            // $personas = DB::table('provedores')
-            $personas =Proveedor::join('personas','provedores.id','=','personas.id')
+            $personas = DB::table('provedores')
+            ->join('personas','provedores.id','=','personas.id')
             ->select('personas.id','personas.nombre','personas.tipo_documento',
             'personas.num_documento','personas.direccion','personas.telefono','personas.email',
             'provedores.contacto','provedores.telefono_contacto')
