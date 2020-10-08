@@ -38,6 +38,8 @@ Route::get('/proveedor','ProveedorController@index');
 Route::post('/proveedor/registrar','ProveedorController@store');
 Route::put('/proveedor/actualizar','ProveedorController@update');
 
+
+Route::get('/rol','RolController@index');
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
