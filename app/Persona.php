@@ -15,6 +15,9 @@ class Persona extends Model
         'email'];
         public function provedor(){//una persona eata relacionado con un solo proveedor
             return $this->hasOne('App\Proveedor');//retornamos modelo proveedor
-        }    
+        }
+        public function user(){//una persona eata relacionado con un solo Usuario
+            return $this->hasOne('App\User');//retornamos modelo usuario
+        }      
 }
  
