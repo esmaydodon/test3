@@ -40,6 +40,7 @@ Route::put('/proveedor/actualizar','ProveedorController@update');
 
 
 Route::get('/rol','RolController@index');
+Route::get('/rol/selectRol','RolController@selectRol');//para select del fomulario asignar roles a usuarios
 
 Route::get('/user','UserController@index');
 Route::post('/user/registrar','UserController@store');

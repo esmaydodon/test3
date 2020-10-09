@@ -32,4 +32,11 @@ class RolController extends Controller
             'roles' => $roles
         ];
     } 
+    //para el select  y asignar un rol a un Usuario
+    public function selectRol(Request $request){  
+        $roles=Rol::where('condicion','=','1')
+        ->select('id','nombre')
+        ->orderBy('nombre','asc')->get();
+        return['roles'=>$roles];
+    }
 }
