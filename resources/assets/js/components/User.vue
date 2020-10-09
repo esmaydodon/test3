@@ -51,16 +51,16 @@
                                 <button type="button" @click="abrirModal('persona','actualizar',persona)" class="btn btn-warning btn-sm">
                                   <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <!-- <template v-if="categoria.condicion==1">
-                                    <button type="button" class="btn btn-danger btn-sm" @click="desactivarCategoria(categoria.id)">
+                               <template v-if="persona.condicion">
+                                    <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(persona.id)">
                                   <i class="icon-trash"></i>
                                 </button>
-                                </template> -->
-                                  <!-- <template v-else>
-                                    <button type="button" class="btn btn-info btn-sm" @click="activarCategoria(categoria.id)">
+                                </template>
+                                <template v-else>
+                                    <button type="button" class="btn btn-info btn-sm" @click="activarUsuario(persona.id)">
                                   <i class="icon-ok"></i>
                                 </button>
-                                </template> -->
+                                </template>
                             </td>
                             <td v-text="persona.nombre"></td>
                             <td v-text="persona.tipo_documento"></td>
@@ -475,7 +475,7 @@
                  this.idRol=0;
 
              },
-                    selectRol(){
+             selectRol(){
                 let me=this;
                 var url= 'rol/selectRol';
                 axios.get(url).then(function (response) {
@@ -533,9 +533,116 @@
                         }   
                      }
                  }
-             }
+             },
+             desactivarUsuario(id){
+                const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                title: 'Esta seguro de desactivar el Usuario?',
+                text: "texto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(id);
+                       let me=this;
+                 axios.put('user/desactivar',{
+                     'id':id    
+                 }).then(function (response) {
+                     
+                     me.listarPersona(1,'','nombre');
+                     swalWithBootstrapButtons.fire(
+                    'Desactivado!',
+                    'El Registro a sido Desactivado con éxito.',
+                    'success'
+                    )
+
+                     //si ocurre todo bien 
+                
+                //me.arrayCategoria=response.data;
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+
+                    
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                    )
+                }
+                })
             },
-     
+            activarUsuario(id){
+                  const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                title: 'Esta seguro de ACTIVAR Usuario?',
+                text: "Consulta!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    //console.log(id);
+                       let me=this;
+                 axios.put('user/activar',{
+                     'id':id    
+                 }).then(function (response) {
+                     
+                     me.listarPersona(1,'','nombre');
+                     swalWithBootstrapButtons.fire(
+                    'Activado!',
+                    'El Registro a sido ACTIVADO con éxito.',
+                    'success'
+                    )
+
+                     //si ocurre todo bien 
+                
+                //me.arrayCategoria=response.data;
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+
+                    
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                    )
+                }
+                })
+            },
+            },
+             
+
             mounted() {
                 this.listarPersona(1,this.buscar,this.criterio);
             }
