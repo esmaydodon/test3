@@ -48,7 +48,9 @@ Route::put('/user/actualizar','UserController@update');
 Route::put('/user/desactivar','UserController@desactivar');
 Route::put('/user/activar','UserController@activar');
 
-Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 //Marlon Martos Quiroz 2020 
+Auth::routes();//se genera demanera automatica la ruta \login
+// seagrego despues de php artisan ui:auth
+Route::get('/home', 'HomeController@index')->name('home');
