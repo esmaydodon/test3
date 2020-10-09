@@ -4204,15 +4204,16 @@ __webpack_require__.r(__webpack_exports__);
         return;
       } else {
         var me = this;
-        axios.post('proveedor/registrar', {
+        axios.post('user/registrar', {
           'nombre': this.nombre,
           'tipo_documento': this.tipo_documento,
           'num_documento': this.num_documento,
           'direccion': this.direccion,
           'telefono': this.telefono,
           'email': this.email,
-          'contacto': this.contacto,
-          'telefono_contacto': this.telefono_contacto
+          'usuario': this.usuario,
+          'password': this.password,
+          'idrol': this.idrol
         }).then(function (response) {
           me.cerrarModal();
           me.listarPersona(1, '', 'nombre'); //si ocurre todo bien 
@@ -4228,7 +4229,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       } else {
         var me = this;
-        axios.put('proveedor/actualizar', {
+        axios.put('user/actualizar', {
           'id': this.persona_id,
           'nombre': this.nombre,
           'tipo_documento': this.tipo_documento,
@@ -4236,8 +4237,9 @@ __webpack_require__.r(__webpack_exports__);
           'direccion': this.direccion,
           'telefono': this.telefono,
           'email': this.email,
-          'contacto': this.contacto,
-          'telefono_contacto': this.telefono_contacto
+          'usuario': this.usuario,
+          'password': this.password,
+          'idrol': this.idrol
         }).then(function (response) {
           me.cerrarModal();
           me.listarPersona(1, '', 'nombre'); //si ocurre todo bien 
@@ -4346,6 +4348,9 @@ __webpack_require__.r(__webpack_exports__);
       this.errorPersona = 0;
       this.errorMostrarMsjPersona = [];
       if (!this.nombre) this.errorMostrarMsjPersona.push("Este nombre de la persona no puede estar vacio!");
+      if (!this.usuario) this.errorMostrarMsjPersona.push("El nombre de Usuario no puede estar vacio!");
+      if (!this.password) this.errorMostrarMsjPersona.push("El Password no puede estar vacio!");
+      if (this.idrol == 0) this.errorMostrarMsjPersona.push("Debe seleccionar un rol para el Usuario!");
       if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
       return this.errorPersona;
     },
@@ -48584,7 +48589,10 @@ var render = function() {
                             _vm._l(_vm.arrayRol, function(rol) {
                               return _c("option", {
                                 key: rol.id,
-                                domProps: { textContent: _vm._s(rol.nombre) }
+                                domProps: {
+                                  value: rol.id,
+                                  textContent: _vm._s(rol.nombre)
+                                }
                               })
                             })
                           ],

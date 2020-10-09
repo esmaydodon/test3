@@ -162,7 +162,7 @@
                             <div class="col-md-9">
                                 <select class="form-control" v-model="idrol">
                                     <option value="0">Selecciones un Rol</option>
-                                    <option v-for="rol in arrayRol" :key="rol.id" v-text="rol.nombre"></option>
+                                    <option v-for="rol in arrayRol" :key="rol.id" v-text="rol.nombre" :value="rol.id"></option>
                                 </select>
                             </div>
                         </div>
@@ -292,15 +292,16 @@
                      return;
                  }else{
                          let me=this;
-                 axios.post('proveedor/registrar',{
+                 axios.post('user/registrar',{
                      'nombre':this.nombre,
                      'tipo_documento':this.tipo_documento,
                      'num_documento':this.num_documento,
                      'direccion':this.direccion,
                      'telefono':this.telefono,
                      'email':this.email,
-                     'contacto':this.contacto,
-                     'telefono_contacto':this.telefono_contacto
+                     'usuario':this.usuario,
+                     'password':this.password,
+                     'idrol':this.idrol
                  }).then(function (response) {
                      me.cerrarModal();
                      me.listarPersona(1,'','nombre');
@@ -319,7 +320,7 @@
                      return;
                  }else{
                          let me=this;
-                 axios.put('proveedor/actualizar',{
+                 axios.put('user/actualizar',{
                      'id':this.persona_id,
                       'nombre':this.nombre,
                      'tipo_documento':this.tipo_documento,
@@ -327,8 +328,9 @@
                      'direccion':this.direccion,
                      'telefono':this.telefono,
                      'email':this.email,
-                     'contacto':this.contacto,
-                     'telefono_contacto':this.telefono_contacto
+                     'usuario':this.usuario,
+                     'password':this.password,
+                     'idrol':this.idrol
                  }).then(function (response) {
                      me.cerrarModal();
                      me.listarPersona(1,'','nombre');
@@ -452,6 +454,9 @@
                 this.errorMostrarMsjPersona=[]; 
 
                 if(!this.nombre) this.errorMostrarMsjPersona.push("Este nombre de la persona no puede estar vacio!");
+                if(!this.usuario) this.errorMostrarMsjPersona.push("El nombre de Usuario no puede estar vacio!");
+                if(!this.password) this.errorMostrarMsjPersona.push("El Password no puede estar vacio!");
+                if(this.idrol==0) this.errorMostrarMsjPersona.push("Debe seleccionar un rol para el Usuario!");
                 if(this.errorMostrarMsjPersona.length) this.errorPersona=1;
                 return this.errorPersona;
             },
