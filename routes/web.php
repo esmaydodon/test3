@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 | 
 */
 
-Route::get('/', function () {
+Route::get('/main', function () {
     return view('contenido/contenido');
-});
+})->name('main');
 Route::get('/categoria','CategoriaController@index');
 Route::post('/categoria/registrar','CategoriaController@store');
 Route::put('/categoria/actualizar','CategoriaController@update');
@@ -51,6 +51,9 @@ Route::put('/user/activar','UserController@activar');
 
 //Route::get('/home', 'HomeController@index')->name('home');
 //Marlon Martos Quiroz 2020 
-Auth::routes();//se genera demanera automatica la ruta \login
+//Auth::routes();//se genera demanera automatica la ruta \login
+Route::get('/','Auth\LoginController@showLoginForm');
+Route::post('/login','Auth\LoginController@login')->name('login');
+
 // seagrego despues de php artisan ui:auth
 Route::get('/home', 'HomeController@index')->name('home');

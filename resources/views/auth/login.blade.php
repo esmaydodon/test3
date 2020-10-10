@@ -5,19 +5,25 @@
       <div class="col-md-8">
         <div class="card-group mb-0">
           <div class="card p-4">
-          <form>
+          <form class="form-horizontal was-validated" method="POST" action="{{route('login')}}">
           {{ csrf_field() }}
+          {{-- para protegernos de solicitudes de falsificaion atraves de sitios  crous air --}}
               <div class="card-body">
               <h1>Acceder</h1>
               <p class="text-muted">Control de acceso al sistema</p>
-              <div class="form-group mb-3">
+              {{-- //si el usuario no coinside suseda una asepocion enc ampo usuario, se le agrega clse is invalid al div --}}
+              <div class="form-group mb-3 {{$errors->has('usuario' ? 'is-invalid' : '')}}">
                 <span class="input-group-addon"><i class="icon-user"></i></span>
-                <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario">
-              </div>
-              <div class="form-group mb-4">
+              <input type="text" value="{{old('usuario')}}" name="usuario" id="usuario" class="form-control" placeholder="Usuario">
+                {{-- mostrar el primer error que aparesca lo muestro en spam con clase invalid --}}
+                {!!$errors->first('usuario','<span class="invalid-feedback">:message</span>')!!}
+            </div>
+              <div class="form-group mb-4  {{$errors->has('password' ? 'is-invalid' : '')}}">
                 <span class="input-group-addon"><i class="icon-lock"></i></span>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-              </div>
+                {{-- mostrar el primer error que aparesca lo muestro en spam con clase invalid --}}
+                {!!$errors->first('password','<span class="invalid-feedback">:message</span>')!!}
+            </div>
               <div class="row">
                 <div class="col-6">
                   <button type="submit" class="btn btn-primary px-4">Acceder</button>
